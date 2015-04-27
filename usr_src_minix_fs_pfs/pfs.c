@@ -4,6 +4,7 @@
 #include <minix/fsdriver.h>
 #include <minix/vfsif.h>
 #include <assert.h>
+#include <sys/stat.h>
 
 /*
  * The following constant defines the number of inodes in PFS, which is
@@ -371,6 +372,14 @@ pfs_chmod(ino_t ino_nr, mode_t * mode)
 	*mode = rip->i_mode;
 	return OK;
 }
+
+static int 
+pfs_inodes (struct inodetablebuffer_ *buf)
+{
+    printf("Inside pfs_inodes");
+    return (OK);
+}
+
 
 /*
  * Process a signal.

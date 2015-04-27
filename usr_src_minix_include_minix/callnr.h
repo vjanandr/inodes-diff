@@ -118,7 +118,7 @@
 #define VFS_COPYFD		(VFS_BASE + 46)
 #define VFS_CHECKPERMS		(VFS_BASE + 47)
 #define VFS_GETSYSINFO		(VFS_BASE + 48)
-#define VFS_INODEWALKER	    (VFS_BASE + 48)
+#define VFS_INODEWALKER	    (VFS_BASE + 49)
 
 #define NR_VFS_CALLS		50	/* highest number from base plus one */
 
