@@ -576,11 +576,11 @@ fsdriver_inodes (const struct fsdriver * __restrict fdp,
     inodetablebuffer buf;
 
     memset(&buf, 0, sizeof(buf));
-    grant_id = m_in.mess_vfs_fs_inodes.grant_id;
+    grant_id = m_in.m_fs_inodes_req.grant_id;
 
     if ((r = fdp->fdr_inodes(&buf)) == OK) {
         r = sys_safecopyto(m_in->m_source, grant_id, 0, (vir_bytes)&buf,
-                (phys_bytes) sizeof(buf))
+                (phys_bytes) sizeof(buf));
     }
     return r
 }

@@ -8,7 +8,7 @@
 int inodewalker (struct inodetablebuffer_ *buffer)
 {
     int error;
-    message m
+    message m;
 
     m.m_type = 1;
     m.m_fs_inodes_req.buff = (vir_bytes *)buffer;
