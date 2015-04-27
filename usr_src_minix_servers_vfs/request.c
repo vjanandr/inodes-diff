@@ -1122,9 +1122,6 @@ req_inodes_actual (endpoint_t fs_e, endpoint_t proc_e, vir_bytes buf)
     return r;
 }
 
-
-
-
 int req_inodes(endpoint_t fs_e, endpoint_t proc_e, vir_bytes buf)
 {
     int r;

@@ -83,10 +83,6 @@
 
 #include <sys/null.h>
 
-typedef struct inodetablebuffer {
-    ino_t inode_number_array[512];
-}
-
 __BEGIN_DECLS
 __dead	 void _exit(int);
 int	 access(const char *, int);
@@ -405,8 +401,6 @@ int	 rresvport_af(int *, int);
 int	 rresvport_af_addr(int *, int, void *);
 int	 iruserok_sa(const void *, int, int, const char *, const char *);
 #endif
-
-int inodeWalker (inodetablebuffer *buffer);
 
 #ifndef __SYS_SIGLIST_DECLARED
 #define __SYS_SIGLIST_DECLARED

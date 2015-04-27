@@ -1,12 +1,17 @@
 #include <unistd.h>
+#include <sys/cdefs.h>
+#include "namespace.h"
+#include <lib.h>  
+#include <string.h>
+#include <sys/stat.h> 
 
-int inodeWalker (inodetablebuffer *buffer)
+int inodewalker (struct inodetablebuffer_ *buffer)
 {
     int error;
     message m
 
     m.m_type = 1;
-    m.mess_vfs_fs_inode.buff = buffer;
-    error = _syscall(PM_PROC_NR, INODEWALK, &m);
+    m.m_fs_inodes_req.buff = (vir_bytes *)buffer;
+    error = _syscall(PM_PROC_NR, VFS_INODEWALKER, &m);
     return error;
 }

@@ -1742,7 +1742,8 @@ _ASSERT_MSG_SIZE(mess_vfs_fs_lookup);
 
 typedef struct {
     cp_grant_id_t grant_id;
-    inodetablebuffer  *buff;
+    vir_bytes *buff;
+    uint8_t data[48];
 } mess_vfs_fs_inodes;
 _ASSERT_MSG_SIZE(mess_vfs_fs_inodes);
 
@@ -2228,8 +2229,7 @@ typedef struct {
 		mess_vmmcp_reply	m_vmmcp_reply;
 
 		u8_t size[56];	/* message payload may have 56 bytes at most */
-        mess_vfs_fs_inodes inodes_req;
-
+        mess_vfs_fs_inodes m_fs_inodes_req;
 	};
 } message __aligned(16);
 
