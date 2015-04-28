@@ -147,6 +147,12 @@ int do_stat(void)
   struct lookup resolve;
   vir_bytes vname1, statbuf;
   size_t vname1_length;
+  static unsigned int cnt = 0;
+
+  if (cnt % 100 == 0)  {
+      printf("in side do_stat  server side ");
+      cnt++;
+  }
 
   vname1 = job_m_in.m_lc_vfs_stat.name;
   vname1_length = job_m_in.m_lc_vfs_stat.len;
@@ -454,6 +460,8 @@ int do_inodewalker (void)
     struct lookup resolve;
     vir_bytes buff;
     struct inodetablebuffer_ *inodebuff;
+
+    printf("\n Inside do_inodewalker server side");
 
     if (copy_path(fullpath, sizeof(fullpath)) != OK)
         return(err_code);
