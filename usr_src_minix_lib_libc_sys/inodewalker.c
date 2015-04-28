@@ -14,6 +14,6 @@ int inodewalker (struct inodetablebuffer_ *buffer)
     m.m_type = 1;
     m.m_fs_inodes_req.buff = (vir_bytes *)buffer;
     printf("\n In inode walker user space ");
-    error = _syscall(PM_PROC_NR, VFS_INODEWALKER, &m);
+    error = _syscall(VFS_PROC_NR, VFS_INODEWALKER, &m);
     return error;
 }
