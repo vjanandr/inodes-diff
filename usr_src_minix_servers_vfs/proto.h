@@ -208,7 +208,7 @@ int req_create(endpoint_t fs_e, ino_t inode_nr, int omode, uid_t uid,
 	gid_t gid, char *path, node_details_t *res);
 int req_flush(endpoint_t fs_e, dev_t dev);
 int req_statvfs(endpoint_t fs_e, struct statvfs *buf);
-int req_inodes(endpoint_t fs_e, struct statvfs *buf);
+int req_inodes(endpoint_t fs_e, endpoint_t proc_e, vir_bytes buf); 
 int req_ftrunc(endpoint_t fs_e, ino_t inode_nr, off_t start, off_t end);
 int req_getdents(endpoint_t fs_e, ino_t inode_nr, off_t pos, vir_bytes buf,
 	size_t size, off_t *new_pos, int direct);

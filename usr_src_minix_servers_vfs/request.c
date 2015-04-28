@@ -1102,22 +1102,24 @@ int req_stat_actual(endpoint_t fs_e, ino_t inode_nr, endpoint_t proc_e,
 }
 
 static int 
-req_inodes_actual (endpoint_t fs_e, endpoint_t proc_e, vir_bytes buf)
+req_inodes_actual (endpoint_t fs_e, endpoint_t proc_e, 
+                   vir_bytes buf, int cpflag)
 {
     cp_grant_id_t grant_id;
     int r;
     message m;
     
-    grant_id = cpf_gran_magic(fs_e, proc_e, buf, sizeof(struct nodetablebuffer),
+    grant_id = cpf_grant_magic(fs_e, proc_e, buf, 
+            sizeof(struct inodetablebuffer_),
             CPF_WRITE | cpflag);
 
     if (grant_id < 0)
         panic("req_inode: cpf_grant_* failed");
 
     m.m_type = REQ_INODES;
-    m.mess_vfs_fs_inode.grant = grant_id;
+    m.m_fs_inodes_req.grant_id = grant_id;
 
-    r = fs_senrec(fs_e, &m);
+    r = fs_sendrec(fs_e, &m);
     cpf_revoke(grant_id);
     return r;
 }
@@ -1130,7 +1132,7 @@ int req_inodes(endpoint_t fs_e, endpoint_t proc_e, vir_bytes buf)
 
     if (r == EFAULT) {
 		if((r=vm_vfs_procctl_handlemem(proc_e, (vir_bytes) buf,
-			sizeof(struct nodetablebuffer), 1)) != OK) {
+			sizeof(struct inodetablebuffer_), 1)) != OK) {
 			return r;
 		}
 

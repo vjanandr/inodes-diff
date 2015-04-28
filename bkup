@@ -1,5 +1,7 @@
 cp /usr/src/include/unistd.h ~/inodes-diff/usr_src_include/
 cp /usr/src/lib/libpuffs/table.c ~/inodes-diff/usr_src_lib_libpuffs/
+cp /usr/src/lib/libpuffs/stadir.c ~/inodes-diff/usr_src_lib_libpuffs/
+cp /usr/src/lib/libpuffs/proto.h ~/inodes-diff/usr_src_lib_libpuffs/
 cp /usr/src/minix/fs/ext2/table.c ~/inodes-diff/usr_src_minix_fs_ext2/
 cp /usr/src/minix/fs/ext2/stadir.c ~/inodes-diff/usr_src_minix_fs_ext2/
 cp /usr/src/minix/fs/ext2/proto.h ~/inodes-diff/usr_src_minix_fs_ext2/
@@ -25,6 +27,7 @@ cp /usr/src/minix/lib/libvtreefs/proto.h ~/inodes-diff/usr_src_minix_lib_libvtre
 cp /usr/src/minix/lib/libvtreefs/stadir.c ~/inodes-diff/usr_src_minix_lib_libvtreefs/
 cp /usr/src/minix/servers/vfs/Makefile ~/inodes-diff/usr_src_minix_servers_vfs/
 cp /usr/src/minix/servers/vfs/inode_walker_vfs.c ~/inodes-diff/usr_src_minix_servers_vfs/
+cp /usr/src/minix/servers/vfs/stadir.c ~/inodes-diff/usr_src_minix_servers_vfs/
 cp /usr/src/minix/servers/vfs/proto.h ~/inodes-diff/usr_src_minix_servers_vfs/
 cp /usr/src/minix/servers/vfs/request.c ~/inodes-diff/usr_src_minix_servers_vfs/
 cp /usr/src/minix/servers/vfs/table.c ~/inodes-diff/usr_src_minix_servers_vfs/

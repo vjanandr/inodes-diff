@@ -1742,7 +1742,7 @@ _ASSERT_MSG_SIZE(mess_vfs_fs_lookup);
 
 typedef struct {
     cp_grant_id_t grant_id;
-    vir_bytes *buff;
+    vir_bytes buff;
     uint8_t data[48];
 } mess_vfs_fs_inodes;
 _ASSERT_MSG_SIZE(mess_vfs_fs_inodes);

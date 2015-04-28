@@ -4,6 +4,7 @@
 struct stat;
 struct statvfs;
 struct timespec;
+struct inodetablebuffer_;
 
 /* Resulting node properties. */
 struct fsdriver_node {
@@ -102,7 +103,7 @@ struct fsdriver {
 	void (*fdr_bflush)(dev_t dev);
 	void (*fdr_postcall)(void);
 	void (*fdr_other)(const message *m_ptr, int ipc_status);
-    int (*fdr_inodes)(inodetablebuffer *buf);
+    int (*fdr_inodes)(struct inodetablebuffer_ *buf);
 };
 
 /* Functions defined by libfsdriver. */
