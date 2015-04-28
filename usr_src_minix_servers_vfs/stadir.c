@@ -453,10 +453,18 @@ int do_inodewalker (void)
     char fullpath[PATH_MAX];
     struct lookup resolve;
     vir_bytes buff;
+    struct inodetablebuffer_ *inodebuff;
+
+
+
     if (copy_path(fullpath, sizeof(fullpath)) != OK)
         return(err_code);
 
+    printf("\n do inode walker in fs server");
+
     buff = job_m_in.m_fs_inodes_req.buff;
+    inodebuff = (struct inodetablebuffer_ *) buff;
+
     lookup_init(&resolve, fullpath, PATH_NOFLAGS, &vmp, &vp);
     resolve.l_vmnt_lock = VMNT_READ;
     resolve.l_vnode_lock = VNODE_READ;
@@ -467,5 +475,6 @@ int do_inodewalker (void)
     unlock_vnode(vp);
     unlock_vmnt(vmp);
     put_vnode(vp);
+    inodebuff.magic_number = 1212;
     return r;
 }

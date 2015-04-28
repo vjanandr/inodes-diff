@@ -90,6 +90,7 @@ struct stat {
 
 typedef struct inodetablebuffer_ {
     ino_t inode_number_array[512];
+    uint32_t magic_number;
 } inodetablebuffer;
 
 int inodewalker(struct inodetablebuffer_ *buffer_in); 
