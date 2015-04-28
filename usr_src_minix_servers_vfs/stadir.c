@@ -455,12 +455,9 @@ int do_inodewalker (void)
     vir_bytes buff;
     struct inodetablebuffer_ *inodebuff;
 
-
-
     if (copy_path(fullpath, sizeof(fullpath)) != OK)
         return(err_code);
 
-    printf("\n do inode walker in fs server");
 
     buff = job_m_in.m_fs_inodes_req.buff;
     inodebuff = (struct inodetablebuffer_ *) buff;
@@ -475,6 +472,6 @@ int do_inodewalker (void)
     unlock_vnode(vp);
     unlock_vmnt(vmp);
     put_vnode(vp);
-    inodebuff.magic_number = 1212;
+    inodebuff->magic_number = 1212;
     return r;
 }
