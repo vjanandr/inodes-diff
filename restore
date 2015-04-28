@@ -6,6 +6,8 @@ cp ~/inodes-diff/usr_src_minix_fs_ext2/table.c /usr/src/minix/fs/ext2/
 cp ~/inodes-diff/usr_src_minix_fs_ext2/stadir.c /usr/src/minix/fs/ext2/stadir.c
 cp ~/inodes-diff/usr_src_minix_fs_ext2/proto.h /usr/src/minix/fs/ext2/proto.h
 cp ~/inodes-diff/usr_src_minix_fs_isofs/table.c /usr/src/minix/fs/isofs/table.c
+cp ~/inodes-diff/usr_src_minix_fs_isofs/stadir.c /usr/src/minix/fs/isofs/stadir.c
+cp ~/inodes-diff/usr_src_minix_fs_isofs/proto.h /usr/src/minix/fs/isofs/proto.h
 cp ~/inodes-diff/usr_src_minix_fs_mfs/table.c /usr/src/minix/fs/mfs/table.c
 cp ~/inodes-diff/usr_src_minix_fs_mfs/proto.h /usr/src/minix/fs/mfs/proto.h
 cp ~/inodes-diff/usr_src_minix_fs_mfs/stadir.c /usr/src/minix/fs/mfs/stadir.c
