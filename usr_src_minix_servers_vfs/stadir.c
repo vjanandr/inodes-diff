@@ -431,15 +431,15 @@ int do_lstat(void)
   struct lookup resolve;
   vir_bytes vname1, statbuf;
   size_t vname1_length;
-  struct stat *stat_buffer;
+//  struct stat *stat_buffer;
 
   vname1 = job_m_in.m_lc_vfs_stat.name;
   vname1_length = job_m_in.m_lc_vfs_stat.len;
   statbuf = job_m_in.m_lc_vfs_stat.buf;
-  stat_buffer =(struct stat *) statbuf;
+//  stat_buffer =(struct stat *) statbuf;
 
   printf("[lstat vfs server side] buff pointer %p magic number", 
-          stat_buffer);
+          statbuf);
 
   lookup_init(&resolve, fullpath, PATH_RET_SYMLINK, &vmp, &vp);
   resolve.l_vmnt_lock = VMNT_READ;
@@ -454,7 +454,7 @@ int do_lstat(void)
 
   put_vnode(vp);
   printf("[lstat vfs server side] buff pointer %p magic number returning", 
-          stat_buffer);
+          statbuf);
   return(r);
 }
 
@@ -471,9 +471,10 @@ int do_inodewalker (void)
 
     buff = job_m_in.m_fs_inodes_req.buff;
     inodebuff = (struct inodetablebuffer_ *) buff;
-    printf("\n[inodewalker: vfs server] Inside do_inodewalker server side-1,"
-            " magic_number %d, buff pointer %p",
-            inodebuff->magic_number, inodebuff);
+    printf("\n[inodewalker: vfs server] Inside do_inodewalker server side-1, %p"
+ //           " magic_number %d, buff pointer %p",
+//            inodebuff->magic_number, 
+            inodebuff);
 
     inodebuff->magic_number = 1211;
     if (copy_path(fullpath, sizeof(fullpath)) != OK)
