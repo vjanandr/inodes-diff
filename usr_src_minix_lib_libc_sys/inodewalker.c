@@ -1,4 +1,3 @@
-#include <unistd.h>
 #include <sys/cdefs.h>
 #include "namespace.h"
 #include <lib.h>  
@@ -9,12 +8,15 @@
 int inodewalker (struct inodetablebuffer_ *buffer)
 {
     int error;
-    message m;
+    message m
 
-    m.m_type = 1;
-    buffer.magic_number = 9191
+    printf("\n [userspace:systemcall] Inode walker before memset %d \n", buffer->magic_number);
+    memset(&m, 0, sizeof(m));
+
+//    m.m_type = 1;
+    buffer->magic_number = 9191;
     m.m_fs_inodes_req.buff = (vir_bytes *)buffer;
-    printf("\n In inode walker user space ");
+    printf("\n [userspace:systemcall] Inode walker before %d\n", buffer->magic_number);
     error = _syscall(VFS_PROC_NR, VFS_INODEWALKER, &m);
     return error;
 }
