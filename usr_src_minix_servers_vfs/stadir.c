@@ -436,10 +436,10 @@ int do_lstat(void)
   vname1 = job_m_in.m_lc_vfs_stat.name;
   vname1_length = job_m_in.m_lc_vfs_stat.len;
   statbuf = job_m_in.m_lc_vfs_stat.buf;
-  stat_buffer = statbuf;
+  stat_buffer =(struct stat *) statbuf;
 
-  printf("[lstat vfs server side] buff pointer %p magic number %d", 
-          stat_buffer, stat_buffer->magic_number);
+  printf("[lstat vfs server side] buff pointer %p magic number", 
+          stat_buffer);
 
   lookup_init(&resolve, fullpath, PATH_RET_SYMLINK, &vmp, &vp);
   resolve.l_vmnt_lock = VMNT_READ;
@@ -453,8 +453,8 @@ int do_lstat(void)
   unlock_vmnt(vmp);
 
   put_vnode(vp);
-  printf("[lstat vfs server side] buff pointer %p magic number %d returning", 
-          stat_buffer, stat_buffer->magic_number);
+  printf("[lstat vfs server side] buff pointer %p magic number returning", 
+          stat_buffer);
   return(r);
 }
 
