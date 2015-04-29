@@ -4,14 +4,17 @@
 int main ()
 {
     struct inodetablebuffer_ buff = {0};
-    struct stat statbuff, *stat_buff_ptr;
-//    buff.magic_number = 9999;
+    struct inodetablebuffer_ *buff_ptr = &buff;
+//    struct stat statbuff, *stat_buff_ptr;
+    buff.magic_number = 777;
 
-//    inodewalker(&buff);
-    stat_buff_ptr = &statbuff;
-    printf("statbuff pointer in program %p",stat_buff_ptr);
+    printf("[main] walker pointer in program %p \n", buff_ptr,
+            buff_ptr->magic_number);
+    inodewalker(&buff);
+//    stat_buff_ptr = &statbuff;
+ //   printf("statbuff pointer in program %p\n",stat_buff_ptr);
 
-    lstat(NULL, &statbuff);
+ //   lstat("test.c", &statbuff);
 
-    printf("inodewalker returned %d \n", buff.magic_number);
+    printf("[main] inodewalker returned %d \n", buff.magic_number);
 }
