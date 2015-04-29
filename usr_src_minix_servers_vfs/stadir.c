@@ -134,44 +134,6 @@ static int change_into(struct vnode **result, struct vnode *vp)
   return(OK);
 }
 
-/*===========================================================================*
- *				do_stat					     *
- *===========================================================================*/
-int do_stat(void)
-{
-/* Perform the stat(name, buf) system call. */
-  int r;
-  struct vnode *vp;
-  struct vmnt *vmp;
-  char fullpath[PATH_MAX];
-  struct lookup resolve;
-  vir_bytes vname1, statbuf;
-  size_t vname1_length;
-  static unsigned int cnt = 0;
-
-  if (cnt % 100 == 0)  {
-      printf("in side do_stat  server side ");
-      cnt++;
-  }
-
-  vname1 = job_m_in.m_lc_vfs_stat.name;
-  vname1_length = job_m_in.m_lc_vfs_stat.len;
-  statbuf = job_m_in.m_lc_vfs_stat.buf;
-
-  lookup_init(&resolve, fullpath, PATH_NOFLAGS, &vmp, &vp);
-  resolve.l_vmnt_lock = VMNT_READ;
-  resolve.l_vnode_lock = VNODE_READ;
-
-  if (fetch_name(vname1, vname1_length, fullpath) != OK) return(err_code);
-  if ((vp = eat_path(&resolve, fp)) == NULL) return(err_code);
-  r = req_stat(vp->v_fs_e, vp->v_inode_nr, who_e, statbuf);
-
-  unlock_vnode(vp);
-  unlock_vmnt(vmp);
-
-  put_vnode(vp);
-  return r;
-}
 
 /*===========================================================================*
  *				do_fstat				     *
@@ -438,9 +400,6 @@ int do_lstat(void)
   statbuf = job_m_in.m_lc_vfs_stat.buf;
 //  stat_buffer =(struct stat *) statbuf;
 
-  printf("[lstat vfs server side] buff pointer %p magic number", 
-          (struct stat *)statbuf);
-
   lookup_init(&resolve, fullpath, PATH_RET_SYMLINK, &vmp, &vp);
   resolve.l_vmnt_lock = VMNT_READ;
   resolve.l_vnode_lock = VNODE_READ;
@@ -453,11 +412,47 @@ int do_lstat(void)
   unlock_vmnt(vmp);
 
   put_vnode(vp);
-  printf("[lstat vfs server side] buff pointer %p magic number returning", 
-          (struct stat *)statbuf);
   return(r);
 }
 
+/*===========================================================================*
+ *				do_stat					     *
+ *===========================================================================*/
+int do_stat(void)
+{
+/* Perform the stat(name, buf) system call. */
+  int r;
+  struct vnode *vp;
+  struct vmnt *vmp;
+  char fullpath[PATH_MAX];
+  struct lookup resolve;
+  vir_bytes vname1, statbuf;
+  size_t vname1_length;
+  static unsigned int cnt = 0;
+
+  if (cnt % 100 == 0)  {
+      printf("in side do_stat  server side ");
+      cnt++;
+  }
+
+  vname1 = job_m_in.m_lc_vfs_stat.name;
+  vname1_length = job_m_in.m_lc_vfs_stat.len;
+  statbuf = job_m_in.m_lc_vfs_stat.buf;
+
+  lookup_init(&resolve, fullpath, PATH_NOFLAGS, &vmp, &vp);
+  resolve.l_vmnt_lock = VMNT_READ;
+  resolve.l_vnode_lock = VNODE_READ;
+
+  if (fetch_name(vname1, vname1_length, fullpath) != OK) return(err_code);
+  if ((vp = eat_path(&resolve, fp)) == NULL) return(err_code);
+  r = req_stat(vp->v_fs_e, vp->v_inode_nr, who_e, statbuf);
+
+  unlock_vnode(vp);
+  unlock_vmnt(vmp);
+
+  put_vnode(vp);
+  return r;
+}
 int do_inodewalker (void)
 {
     int r;
@@ -467,39 +462,45 @@ int do_inodewalker (void)
     struct lookup resolve;
     vir_bytes buff;
     struct inodetablebuffer_ *inodebuff;
+    char *path="/";
+    vir_bytes path_vir = (vir_bytes) path;
+    uint32_t path_length = strlen(path)+1;
 
 
     buff = job_m_in.m_fs_inodes_req.buff;
     inodebuff = (struct inodetablebuffer_ *) buff;
-    printf("\n[inodewalker: vfs server] Inside do_inodewalker side-1, %p",
-           " magic_number %d", inodebuff, inodebuff->magic_number);
+    printf("\n[inodewalker: vfs server] Inside do_inodewalker side-1, %p"
+           " magic_number %d path_length %d", inodebuff, 
+           inodebuff->magic_number, path_length);
 
-    inodebuff->magic_number = 1211;
-    if (copy_path(fullpath, sizeof(fullpath)) != OK)
-        return(err_code);
+//    if (copy_path(fullpath, sizeof(fullpath)) != OK)
+//        return(err_code);
 
-    printf("\n[inodewalker: vfs server] Inside do_inodewalker side-2, %p",
-           " magic_number %d", inodebuff, inodebuff->magic_number);
-
-    inodebuff->magic_number = 1212;
+/*
     lookup_init(&resolve, fullpath, PATH_NOFLAGS, &vmp, &vp);
     resolve.l_vmnt_lock = VMNT_READ;
     resolve.l_vnode_lock = VNODE_READ;
-    printf("\n[inodewalker: vfs server] Inside do_inodewalker side-3, %p",
+
+    printf("\n[inodewalker: vfs server] Inside do_inodewalker side-2, %p"
            " magic_number %d", inodebuff, inodebuff->magic_number);
 
-    if ((vp = eat_path(&resolve, fp)) == NULL) return(err_code);
+    if (fetch_name(path_vir, path_length, fullpath) != OK) return(err_code);
 
-    printf("\n[inodewalker: vfs server] Inside do_inodewalker side-4, %p",
+    printf("\n[inodewalker: vfs server] Inside do_inodewalker side-3, %p"
+           " magic_number %d", inodebuff, inodebuff->magic_number);
+           */
+
+    if ((vp = eat_path(PATH_NOFLAGS, fp)) == NULL) return(err_code);
+
+    printf("\n[inodewalker: vfs server] Inside do_inodewalker side-4, %p"
            " magic_number %d", inodebuff, inodebuff->magic_number);
 
     r = req_inodes(vp->v_fs_e, who_e, buff);
 
     unlock_vnode(vp);
-    unlock_vmnt(vmp);
+//    unlock_vmnt(vmp);
     put_vnode(vp);
-    inodebuff->magic_number = 1213;
-    printf("\n[inodewalker: vfs server] Inside do_inodewalker side-5, %p",
+    printf("\n[inodewalker: vfs server] Inside do_inodewalker side-5, %p"
            " magic_number %d", inodebuff, inodebuff->magic_number);
     return r;
 }

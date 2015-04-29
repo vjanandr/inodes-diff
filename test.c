@@ -8,7 +8,7 @@ int main ()
 //    struct stat statbuff, *stat_buff_ptr;
     buff.magic_number = 777;
 
-    printf("[main] walker pointer in program %p \n", buff_ptr,
+    printf("[main] walker pointer in program %p magic %d\n", buff_ptr,
             buff_ptr->magic_number);
     inodewalker(&buff);
 //    stat_buff_ptr = &statbuff;
