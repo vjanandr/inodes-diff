@@ -461,25 +461,37 @@ int do_inodewalker (void)
     vir_bytes buff;
     struct inodetablebuffer_ *inodebuff;
 
-    printf("\n Inside do_inodewalker server side");
-
-    if (copy_path(fullpath, sizeof(fullpath)) != OK)
-        return(err_code);
-
 
     buff = job_m_in.m_fs_inodes_req.buff;
     inodebuff = (struct inodetablebuffer_ *) buff;
+    printf("\n Inside do_inodewalker server side-1, magic_number %d",
+            inodebuff->magic_number);
 
+    inodebuff->magic_number = 1211;
+    if (copy_path(fullpath, sizeof(fullpath)) != OK)
+        return(err_code);
+
+    printf("\n Inside do_inodewalker server side-2, magic_number %d",
+            inodebuff->magic_number);
+
+    inodebuff->magic_number = 1212;
     lookup_init(&resolve, fullpath, PATH_NOFLAGS, &vmp, &vp);
     resolve.l_vmnt_lock = VMNT_READ;
     resolve.l_vnode_lock = VNODE_READ;
+    printf("\n Inside do_inodewalker server side-3, magic_number %d",
+            inodebuff->magic_number);
+
     if ((vp = eat_path(&resolve, fp)) == NULL) return(err_code);
 
+    printf("\n Inside do_inodewalker server side-4, magic_number %d",
+            inodebuff->magic_number);
     r = req_inodes(vp->v_fs_e, who_e, buff);
 
     unlock_vnode(vp);
     unlock_vmnt(vmp);
     put_vnode(vp);
-    inodebuff->magic_number = 1212;
+    inodebuff->magic_number = 1213;
+    printf("\n Inside do_inodewalker server side-5, magic_number %d",
+            inodebuff->magic_number);
     return r;
 }
