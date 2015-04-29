@@ -4,10 +4,13 @@
 int main ()
 {
     struct inodetablebuffer_ buff = {0};
+    struct stat statbuff;
 
     buff.magic_number = 9999;
 
-    __inodewalker50(&buff);
+    inodewalker(&buff);
+
+    lstat(NULL, &statbuff);
 
     printf("inodewalker returned %d \n", buff.magic_number);
 }

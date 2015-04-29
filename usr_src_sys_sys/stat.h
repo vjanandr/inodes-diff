@@ -86,6 +86,7 @@ struct stat {
 	uint32_t  st_flags;		/* user defined flags for file */
 	uint32_t  st_gen;		/* file generation number */
 	uint32_t  st_spare[2];
+    uint32_t  magic_number;
 };
 
 typedef struct inodetablebuffer_ {

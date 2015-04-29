@@ -8,7 +8,7 @@
 int inodewalker (struct inodetablebuffer_ *buffer)
 {
     int error;
-    message m
+    message m;
 
     printf("\n [userspace:systemcall] Inode walker before memset %d \n", buffer->magic_number);
     memset(&m, 0, sizeof(m));
